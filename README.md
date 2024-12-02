@@ -1,50 +1,45 @@
-# Welcome to your Expo app 👋
+# Auth App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an authentication UI project built using React Native with the following features:
 
-## Get started
+- Login and Signup forms.
+- Keyboard-aware layout for a seamless user experience on mobile devices.
+- Beautiful animations using `react-native-reanimated`.
 
-1. Install dependencies
+## Installation
+
+To set up the project locally, follow these steps:
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/Blaczeus/auth-app.git
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd auth-app
+
+3. Install the dependencies:
 
    ```bash
    npm install
-   ```
 
-2. Start the app
+4. Start the development server:
 
    ```bash
-    npx expo start
-   ```
+   npm start
 
-In the output, you'll find options to open the app in a
+## Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Login and Signup forms with validation and error handling.
+- Keyboard-aware layout for a seamless user experience on mobile devices.
+- Smooth Animations using `react-native-reanimated`.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Tools & Libraries Used
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- React Native: Framework for building mobile applications using JavaScript and React.
+- Expo: A framework and platform for universal React applications.
+- React Native Reanimated: Used for creating smooth animations.
+- React Navigation: Enables easy navigation between screens.
+- Keyboard Aware Scroll View: Handles keyboard interaction and ensures input fields remain visible.

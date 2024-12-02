@@ -1,41 +1,24 @@
 {
   "expo": {
-    "name": "HomeHub",
-    "slug": "HomeHub",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
+    "web": {
+      "bundler": "metro"
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    "ios": {
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
+    "userInterfaceStyle": "automatic",
+    "name": "login-ui",
+    "slug": "login-ui",
     "plugins": [
-      "expo-router",
       [
-        "expo-splash-screen",
+        "expo-secure-store",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "configureAndroidBackup": true,
+          "faceIDPermission": "Allow Auth-App to access your Face ID biometric data."
         }
       ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    ]
   }
 }
