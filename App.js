@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from './app/navigation/AuthStack';
@@ -30,9 +30,7 @@ export default function App() {
 
   if (isAuthenticated === null) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+      <Image style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} source={require('./assets/images/splash.jpg')} />
     );
   }
 

@@ -79,29 +79,29 @@ export default function SignupScreen ({setIsAuthenticated})
         <View className="">
             <View className="w-full h-full bg-white">
                 <StatusBar style="dark" />
-                <Image source={require( '../../assets/images/background.png' )} className="absolute w-full h-full" />
+                <Image source={require( '../../assets/images/background.jpg' )} className="absolute w-full h-full flex-1 bg-cover" />
 
-                {/*Lights*/}
-                <View className="absolute flex-row justify-around w-full">
-                    <Animated.Image entering={FadeInUp.delay( 200 ).duration( 1000 ).springify().damping( 3 )} source={require( '../../assets/images/light.png' )} className="h-[225] w-[90]" />
-                    <Animated.Image entering={FadeInUp.delay( 400 ).duration( 1000 ).springify().damping( 2 )} source={require( '../../assets/images/light.png' )} className="h-[160] w-[65]" />
+                {/*Logo*/}
+                <View className="absolute flex-row top-[25%] items-center justify-around w-full">
+                    <Animated.Image entering={FadeInUp.delay( 400 ).duration( 1000 ).springify()} source={require( '../../assets/images/Logos/lightlogo-big.png' )} className="h-[95] w-[379] mb-10" />
                 </View>
 
                 {/*Title and Form*/}
-                <View className="flex justify-around w-full h-full pt-48">
+                <View className="flex justify-around w-full h-full pt-40 pb-10">
 
                     {/*Title*/}
-                    <View className="flex items-center">
-                        <Animated.Text entering={FadeInUp.duration( 1000 ).springify()} className="text-5xl font-bold tracking-wider text-white">Sign Up</Animated.Text>
+                    <View className="flex items-center top-[15%]">
+                        <Animated.Text entering={FadeInUp.duration( 1000 ).springify()} className="text-2xl font-bold tracking-wider text-[#2E2E38] mb-10">Find your Perfect Home Now</Animated.Text>
                     </View>
 
                     {/*Form*/}
 
                     <View className="flex items-center mx-4 space-y-4">
-                        <Animated.View entering={FadeInDown.duration( 1000 ).springify()} className="w-full p-5 m-3 bg-black/5 rounded-2xl">
+
+                         <Animated.View entering={FadeInDown.duration( 1000 ).springify()} className="w-full p-3 m-5 bg-black/5 rounded-2xl">
                             <TextInput 
-                                placeholder="Username"
-                                placeholderTextColor={'gray'}
+                                placeholder="Username" 
+                                placeholderTextColor={'#2E2E38'} 
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 value={username}
@@ -109,11 +109,10 @@ export default function SignupScreen ({setIsAuthenticated})
                             />
                         </Animated.View>
 
-                        <Animated.View entering={FadeInDown.delay( 200 ).duration( 1000 ).springify()} className="w-full p-5 m-3 bg-black/5 rounded-2xl">
+                        <Animated.View entering={FadeInDown.delay( 200 ).duration( 1000 ).springify()} className="w-full p-3 m-5 bg-black/5 rounded-2xl">
                             <TextInput 
-                                placeholder="Email"
-                                placeholderTextColor={'gray'}
-                                keyboardType='email-address'
+                                placeholder="Email" 
+                                placeholderTextColor={'#2E2E38'} 
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 value={email}
@@ -121,39 +120,37 @@ export default function SignupScreen ({setIsAuthenticated})
                             />
                         </Animated.View>
 
-                        <Animated.View entering={FadeInDown.delay( 400 ).duration( 1000 ).springify()} className="flex-row items-center w-full p-5 m-3 bg-black/5 rounded-2xl">
+                        <Animated.View entering={FadeInDown.delay( 400 ).duration( 1000 ).springify()} className="flex-row items-center w-full p-3 m-3 bg-black/5 rounded-2xl">
                             <TextInput
                                 placeholder="Password"
-                                placeholderTextColor={'gray'}
+                                placeholderTextColor={'#2E2E38'}
                                 value={password}
                                 onChangeText={setPassword}
                                 secureTextEntry={!showPassword}
                                 className='flex-1'
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                <Text className="font-bold text-sky-600">{showPassword ? 'Hide' : 'Show'}</Text>
+                                <Text className="font-bold text-[#3F85D7]">{showPassword ? 'Hide' : 'Show'}</Text>
                             </TouchableOpacity>
 
                         </Animated.View>
 
                         {error && (
-                            <Animated.Text entering={FadeIn} className="text-red-500 text-center font-bold text-lg">
+                            <Animated.Text entering={FadeIn} className="text-red-500 text-center font-bold text-lg mt-7">
                                 {errorText}
                             </Animated.Text>
                         )}
-
-                        <Animated.View entering={FadeInDown.delay( 600 ).duration( 1000 ).springify()} className="flex items-center justify-center w-full p-5 mt-5 rounded-2xl">
-                            <TouchableOpacity 
+                        
+                        <Animated.View entering={FadeInDown.delay( 600 ).duration( 1000 ).springify()} className="flex items-center justify-center w-full p-3 mt-5 rounded-2xl">
+                            <TouchableOpacity
                                 onPress={handleSignup}
-                                className={`flex items-center justify-center w-full px-4 ${loading ? 'bg-sky-300' : 'bg-sky-400'} h-14 rounded-2xl`}
+                                className={`w-full bg-[#3F85D7] p-4 rounded-2xl items-center justify-center ${loading ? 'opacity-70' : ''}`}
                                 disabled={loading}
                             >
                                 {loading ? (
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <ActivityIndicator size="large" color="#0000ff" />
-                                    </View>
+                                    <ActivityIndicator size="large" color="#FFFFFF" />
                                 ) : (
-                                    <Text className="text-xl font-bold text-center text-white">Sign Up</Text>
+                                    <Text className="text-white text-lg font-bold">SignUp</Text>
                                 )}
                             </TouchableOpacity>
                         </Animated.View>
@@ -161,11 +158,14 @@ export default function SignupScreen ({setIsAuthenticated})
                         <Animated.View entering={FadeInDown.delay( 800 ).duration( 1000 ).springify()} className="flex-row justify-center">
                             <Text>Already have an account?</Text>
                             <TouchableOpacity onPress={() => navigation.push( 'Login' )}>
-                                <Text className="font-bold text-sky-600"> Login</Text>
+                                <Text className="font-bold text-[#3F85D7]"> Login</Text>
                             </TouchableOpacity>
                         </Animated.View>
-                    </View>
 
+                        <View className="items-center absolute w-full top-[120%]">
+                            <Animated.Image entering={FadeInUp.delay( 1000 ).duration( 1000 ).springify().damping( 2 )} source={require( '../../assets/images/nervego.png' )} className="h-[23] w-[191]" />
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
