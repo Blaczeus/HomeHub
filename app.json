@@ -9,8 +9,9 @@
       }
     },
     "userInterfaceStyle": "automatic",
-    "name": "login-ui",
-    "slug": "login-ui",
+    "name": "HomeHub",
+    "slug": "HomeHub",
+    "newArchEnabled": true,
     "plugins": [
       [
         "expo-secure-store",
