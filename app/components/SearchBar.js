@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-const SearchBar = ({query, onQueryChange}) => {
+const SearchBar = ({ query }) => {
   const [searchTerm, setSearchTerm] = useState(query || "");
-  const [searching, setSearching] = useState(false)
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     setSearchTerm(query);
@@ -15,7 +15,6 @@ const SearchBar = ({query, onQueryChange}) => {
     setSearching(true);
 
     console.log("Searching for:", searchTerm);
-    if (onQueryChange) onQueryChange(searchTerm);
 
     setTimeout(() => {
       setSearching(false);
@@ -36,14 +35,10 @@ const SearchBar = ({query, onQueryChange}) => {
           autoCapitalize="none"
           autoCorrect={false}
           value={searchTerm}
-          onChangeText={(text) => {
-            setSearchTerm(text);
-            if (onQueryChange) onQueryChange(text);
-          }}
+          onChangeText={setSearchTerm} 
           onSubmitEditing={handleSearch}
           className="flex-1 text-black"
         />
-
       </View>
 
       {/* Spacer */}
@@ -53,15 +48,10 @@ const SearchBar = ({query, onQueryChange}) => {
       <TouchableOpacity
         onPress={handleSearch}
         disabled={searching}
-        className={`flex-row w-1/4 h-16 items-center rounded-lg px-4 py-2 ${
-          searching ? "bg-[#2E2E38]" : "bg-[#2E2E38]"}`
-        }
+        className={`flex-row w-1/4 h-16 items-center rounded-lg px-4 py-2 ${searching ? "bg-[#2E2E38]" : "bg-[#2E2E38]"}`}
       >
         {/* Filter Icon */}
-        <Image
-          source={require("../../assets/images/filter.png")}
-          className="w-8 h-8 mr-2"
-        />
+        <Image source={require("../../assets/images/filter.png")} className="w-8 h-8 mr-2" />
         {/* Filters Text */}
         <Text className="text-white text-sm">{searching ? "Searching" : "Filter"}</Text>
       </TouchableOpacity>

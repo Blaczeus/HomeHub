@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 
 import SearchBar from '../components/SearchBar';
 import MenuItem from "../components/MenuItem";
+import PropertyCard from '../components/PropertyCard';
 
-
-export default function HomeScreen({ setIsAuthenticated }) 
-{
+export default function HomeScreen({ setIsAuthenticated }) {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [selectedItem, setSelectedItem] = useState("Apartment");
+  const [selectedFilter, setSelectedFilter] = useState("Apartment");
   const [searchQuery, setSearchQuery] = useState("");
 
   const menuItems = ["Apartment", "House", "Office", "Land"];
 
-  const handleMenuItemPress = (item) => {
-    setSelectedItem(item);
-    // setSearchQuery(item);
+
+  const handleFilterClick = (item) => {
+    setSelectedFilter(item);
+    setSearchQuery(item);
   };
 
   useEffect(() => {
@@ -62,7 +61,6 @@ export default function HomeScreen({ setIsAuthenticated })
       {userInfo ? (
         <>
           <View className="w-full h-full">
-
             {/* Header */}
             <View className="relative flex flex-row items-center mt-14 px-6 py-3 justify-between">
               {/* Sidebar Button */}
@@ -111,24 +109,25 @@ export default function HomeScreen({ setIsAuthenticated })
                 <MenuItem
                   key={item}
                   label={item}
-                  isSelected={selectedItem === item}
-                  onPress={() => handleMenuItemPress(item)}
+                  isSelected={selectedFilter === item}
+                  onPress={() => handleFilterClick(item)}
                 />
               ))}
             </View>
 
             <View className="relative flex flex-row items-center px-8 py-3 justify-between">
-              <Text className="text-xl font-bold text-[#04364A]">{selectedItem}s</Text>
+              <Text className="text-xl font-bold text-[#04364A]">{selectedFilter}s</Text>
 
-              <View className="flex-row gap-2">
+              <View className="">
+                <TouchableOpacity className="flex-row gap-2">
                 <Text className="text-lg font-bold text-[#3F85D7]">See All</Text>
-                <TouchableOpacity>
                   <Feather name="arrow-right" size={20} color="#3F85D7" />
                 </TouchableOpacity>            
               </View>
-              
             </View>
-
+          </View>
+          <View className="flex flex-row flex-wrap justify-center items-center mt-10">
+            <PropertyCard />
           </View>
         </>
       ) : (

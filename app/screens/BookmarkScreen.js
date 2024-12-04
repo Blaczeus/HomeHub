@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Linking, TouchableOpacity } from 'react-native';
 
-export default function AboutScreen() {
+export default function BookmarkScreen() {
   const handleOpenLink = (url) => {
     Linking.openURL(url);
   };
