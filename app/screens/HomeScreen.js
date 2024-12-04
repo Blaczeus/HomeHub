@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, ActivityIndicator, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { Feather } from '@expo/vector-icons';
-
 import SearchBar from '../components/SearchBar';
 import MenuItem from "../components/MenuItem";
+import NotificationsScreen from '../screens/NotificationScreen';
 import PropertyCard from '../components/PropertyCard';
 
 export default function HomeScreen({ setIsAuthenticated }) {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [selectedFilter, setSelectedFilter] = useState("Apartment");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
 
-  const menuItems = ["Apartment", "House", "Office", "Land"];
-
-
-  const handleFilterClick = (item) => {
-    setSelectedFilter(item);
-    setSearchQuery(item);
-  };
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -38,6 +33,22 @@ export default function HomeScreen({ setIsAuthenticated }) {
     };
     fetchUserInfo();
   }, []);
+
+  const menuItems = ["Apartment", "House", "Office", "Land"];
+
+
+  const handleFilterClick = (item) => {
+    setSelectedFilter(item);
+    setSearchQuery(item);
+  };
+
+  const handleNotificationClick = () => {
+    setShowNotificationModal(true);
+  };
+
+  const closeNotification = () => {
+    setShowNotificationModal(false);
+  };
 
   if (loading) {
     return (
@@ -57,7 +68,7 @@ export default function HomeScreen({ setIsAuthenticated }) {
 
   return (
     <View className="">
-      <Image source={require( '../../assets/images/background.jpg' )} className="absolute w-full h-full flex-1 bg-cover" />
+      <Image source={require('../../assets/images/background.jpg')} className="absolute w-full h-full flex-1 bg-cover" />
       {userInfo ? (
         <>
           <View className="w-full h-full">
@@ -76,7 +87,7 @@ export default function HomeScreen({ setIsAuthenticated }) {
               <View className="flex-row gap-4">
                 {/* Notifications Icon */}
                 <View className="relative">
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handleNotificationClick}>
                     <Feather name="bell" size={24} color="#000" />
                   </TouchableOpacity>
                   {/* Badge Count */}
@@ -120,15 +131,32 @@ export default function HomeScreen({ setIsAuthenticated }) {
 
               <View className="">
                 <TouchableOpacity className="flex-row gap-2">
-                <Text className="text-lg font-bold text-[#3F85D7]">See All</Text>
+                  <Text className="text-lg font-bold text-[#3F85D7]">See All</Text>
                   <Feather name="arrow-right" size={20} color="#3F85D7" />
-                </TouchableOpacity>            
+                </TouchableOpacity>
               </View>
             </View>
           </View>
           <View className="flex flex-row flex-wrap justify-center items-center mt-10">
-            <PropertyCard />
+            <PropertyCard imageUri={require('../../assets/images/properties/property1.jpg')} />
           </View>
+
+           {/* Notifications Modal */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showNotificationModal}
+            onRequestClose={closeNotification}
+          >
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <NotificationsScreen closeModal={closeNotification} />
+                <TouchableOpacity onPress={closeNotification} style={styles.closeButton}>
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </>
       ) : (
         <>
@@ -145,3 +173,30 @@ export default function HomeScreen({ setIsAuthenticated }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    width: '80%',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#3f85d7',
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
