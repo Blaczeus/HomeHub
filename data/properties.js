@@ -15,7 +15,7 @@ export const properties = [
     features: ['Swimming Pool', 'Garage', 'Private Garden'],
     agent: {
       name: 'Tope Alabi',
-      contact: '+234 801 234 5678',
+      contact: '+234 912 952 4232',
       imageUri: require('../assets/images/agents/agent1.png'),
     },
   },
@@ -35,7 +35,7 @@ export const properties = [
     features: ['Rooftop Terrace', 'Modern Kitchen', 'Smart Security'],
     agent: {
       name: 'Ada Nwachukwu',
-      contact: '+234 809 987 6543',
+      contact: '+234 806 500 0946',
       imageUri: require('../assets/images/agents/agent1.png'),
     },
   },
@@ -55,7 +55,7 @@ export const properties = [
     features: ['Spacious Living Room', 'Home Office', '24/7 Security'],
     agent: {
       name: 'John Doe',
-      contact: '+234 701 456 7890',
+      contact: '+234 806 066 5383',
       imageUri: require('../assets/images/agents/agent1.png'),
     },
   },
@@ -75,7 +75,7 @@ export const properties = [
     features: ['Affordable', 'Green Space', 'Quiet Neighborhood'],
     agent: {
       name: 'Yemi Balogun',
-      contact: '+234 803 123 4567',
+      contact: '+234 907 6069 368',
       imageUri: require('../assets/images/agents/agent1.png'),
     },
   },

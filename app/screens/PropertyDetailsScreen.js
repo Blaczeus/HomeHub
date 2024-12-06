@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Image, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, ActivityIndicator, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { Feather } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,7 +23,7 @@ export default function PropertyDetailsScreen({ route }) {
   };
 
   const handleCall = (contactNumber) => {
-    Linking.openURL(`tel:${contactNumber}`); // Replace with actual number
+    Linking.openURL(`tel:${contactNumber}`);
   };
 
   useEffect(() => {
