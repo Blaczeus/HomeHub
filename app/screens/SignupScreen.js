@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-import mockUsers from '../../mockUsers';
+import mockUsers from '../../data/mockUsers';
 
 
 export default function SignupScreen ({setIsAuthenticated})

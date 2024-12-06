@@ -3,7 +3,7 @@ import { View, ActivityIndicator, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from './app/navigation/AuthStack';
-import AuthenticatedTabs from './app/navigation/AuthenticatedTabs';
+import AppNavigator from './app/navigation/AppNavigator';
 import './assets/styles/global.css';
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
   return (
      <NavigationContainer>
       {isAuthenticated ? (
-        <AuthenticatedTabs 
+        <AppNavigator 
           setIsAuthenticated={setIsAuthenticated} 
           userInfo={userInfo} 
         />

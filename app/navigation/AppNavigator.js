@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import BookmarkScreen from '../screens/BookmarkScreen';
 import ChatScreen from '../screens/ChatScreen';
+import NotificationsScreen from '../screens/NotificationScreen';
+import PropertyDetailsScreen from '../screens/PropertyDetailsScreen.js';
 
 import HomeIcon from '../../assets/images/tabicons/homeicon.png';
 import BookmarkIcon from '../../assets/images/tabicons/Bookmarkicon.png';
@@ -14,8 +17,9 @@ import SettingsIcon from '../../assets/images/tabicons/Settingicon.png';
 import GridIcon from '../../assets/images/tabicons/Gridicon.png';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const BottomMenu = () => {
+function BottomTab({ setIsAuthenticated, userInfo }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -82,7 +86,6 @@ const BottomMenu = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
@@ -94,10 +97,70 @@ const BottomMenu = () => {
             </View>
           ),
         }}
-      />
+      >
+        {() => (
+          <SettingsScreen
+            setIsAuthenticated={setIsAuthenticated}
+            userInfo={userInfo}
+          />
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
-};
+}
+
+export default function AppNavigator({ setIsAuthenticated, userInfo }) {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* Authenticated Tab Navigator */}
+      <Stack.Screen name="Tabs">
+        {() => <BottomTab setIsAuthenticated={setIsAuthenticated} userInfo={userInfo} />}
+      </Stack.Screen>
+
+      {/* Notifications Screen */}
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          animationEnabled: true,
+          cardStyleInterpolator: ({ current, layouts }) => ({
+            cardStyle: {
+              transform: [
+                {
+                  translateY: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-layouts.screen.height, 0],
+                  }),
+                },
+              ],
+            },
+          }),
+        }}
+      />
+
+      {/* Property Details Screen */}
+      <Stack.Screen
+        name="PropertyDetails"
+        component={PropertyDetailsScreen}
+        options={{
+          animationEnabled: true,
+          cardStyleInterpolator: ({ current, layouts }) => ({
+            cardStyle: {
+              transform: [
+                {
+                  translateY: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-layouts.screen.height, 0],
+                  }),
+                },
+              ],
+            },
+          }),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 const styles = StyleSheet.create({
   tabBarStyle: {
@@ -151,5 +214,3 @@ const styles = StyleSheet.create({
     height: 28,
   },
 });
-
-export default BottomMenu;
