@@ -3,10 +3,10 @@ import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const PropertyCard = ({ property, onPress, isFavorite, onToggleFavorite }) => {
+const PropertyCard = ({ property, onPress, isFavourite, onToggleFavorite }) => {
   return (
     <TouchableOpacity
-      className="mx-5 my-3 shadow-md rounded-[20] overflow-hidden"
+      className="mx-5 my-3 shadow-md rounded-[20] mb-12 overflow-hidden w-[88%]"
       onPress={onPress}
     >
       {/* Card Gradient Background */}
@@ -40,12 +40,16 @@ const PropertyCard = ({ property, onPress, isFavorite, onToggleFavorite }) => {
           {/* Favorite Button */}
           <TouchableOpacity 
             className="absolute top-3 right-3"
-            onPress={() => onToggleFavorite(property.id)}
+            onPress={(e) => {
+              e.stopPropagation();
+              onToggleFavorite(property.id);
+            }}
           >
             <Icon 
-              name="star" 
+              name={isFavourite ? 'star' : 'star-outline'} 
               size={23} 
-              color= {isFavorite? '#FFC336' : '#fff'} />
+              color= {isFavourite ? '#FFC336' : '#fff'} 
+            />
           </TouchableOpacity>
         </View>
 

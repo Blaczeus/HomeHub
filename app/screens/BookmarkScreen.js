@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, ActivityIndicator, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar';
 import PropertyCard from '../components/PropertyCard';
-import {properties} from '../../data/properties';
+import { FavouritesContext } from "../contexts/FavouritesContext";
 
+export default function BookmarkScreen({ properties }) {
 
-export default function BookmarkScreen({ setIsAuthenticated }) {
+  const { favourites, setFavourites } = React.useContext(FavouritesContext);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [favourites, setFavourites] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -55,23 +55,35 @@ export default function BookmarkScreen({ setIsAuthenticated }) {
   }
 
   return (
-    <ScrollView className="flex-1 w-full h-full">
-      <View className="relative flex-1">
-        <Image
-          source={require('../../assets/images/background.jpg')}
-          className="absolute w-full h-full flex-1 bg-cover"
-        />
-
+    <>
+      <Image source={require('../../assets/images/background.jpg')} className="absolute w-full h-full flex-1 bg-cover" />
+      <View className="flex-1 w-full h-full">
         {/* Header */}
         <View className="relative flex flex-row items-center mt-14 px-6 py-3 justify-between">
+          {/* Sidebar Button */}
           <TouchableOpacity>
             <Feather name="menu" size={24} color="#000" />
           </TouchableOpacity>
-          <Text className="absolute left-[38%] text-xl font-bold">Bookmarks</Text>
+
+          {/* Centered Text */}
+          <Text className="text-2xl font-bold">
+            Favourites
+          </Text>
+
           <View className="flex-row gap-4">
-            <TouchableOpacity>
-              <Feather name="star" size={24} color="#000" />
-            </TouchableOpacity>
+            {/* Favourite Icon */}
+            <View className="relative">
+              <TouchableOpacity>
+                <Feather name="star" size={24} color="#000" />
+              </TouchableOpacity>
+
+              {/* Badge Count */}
+              {favourites.length > 0 && (
+                <View className="absolute -top-1 -right-2 bg-red-500 rounded-full w-4 h-4 flex items-center justify-center">
+                  <Text className="text-white text-xs">{favourites.length}</Text>
+                </View>
+              )}
+            </View>
           </View>
         </View>
 
@@ -86,7 +98,7 @@ export default function BookmarkScreen({ setIsAuthenticated }) {
         </View>
 
         {/* Property List */}
-        <View className="flex-1 flex-row flex-wrap justify-center items-center m-3">
+        <View className="flex-1 flex-wrap flex-row justify-center items-center mx-3 my-4 w-full">
           <FlatList
             data={properties.filter((property) => favourites.includes(property.id))}
             renderItem={({ item }) => (
@@ -103,12 +115,11 @@ export default function BookmarkScreen({ setIsAuthenticated }) {
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{
               paddingBottom: 100,
-              flexGrow: 1,
             }}
             ListEmptyComponent={<Text className="text-center text-lg">No bookmarks found</Text>}
           />
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }

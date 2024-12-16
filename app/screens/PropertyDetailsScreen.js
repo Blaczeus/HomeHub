@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, ActivityIndicator, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { Feather } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FavouritesContext } from "../contexts/FavouritesContext";
 
-export default function PropertyDetailsScreen({ route }) {
+
+export default function PropertyDetailsScreen({ route}) {
+
+  const { property } = route.params;
+  const { favourites, setFavourites } = useContext(FavouritesContext);
+  const isFavourite = favourites.includes(property.id);
+  
+  const onToggleFavourite = (propertyId) => {
+    setFavourites((prevFavourites = []) => {
+      const isCurrentlyFavourite = prevFavourites.includes(propertyId);
+      if (isCurrentlyFavourite) {
+        return prevFavourites.filter(id => id !== propertyId);
+      } else {
+        return [...prevFavourites, propertyId];
+      }
+    });
+  };
+
+
+
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [favourites, setFavourites] = useState([]);
   
-  const { property } = route.params;
   const navigation = useNavigation();
-
-  const toggleFavourite = (propertyId) => {
-    setFavourites((prevFavourites) =>
-      prevFavourites.includes(propertyId)
-        ? prevFavourites.filter((id) => id !== propertyId)
-        : [...prevFavourites, propertyId]
-    );
-  };
 
   const handleCall = (contactNumber) => {
     Linking.openURL(`tel:${contactNumber}`);
@@ -70,9 +80,13 @@ export default function PropertyDetailsScreen({ route }) {
               {/* Favorite Button */}
               <TouchableOpacity 
                 className="absolute bottom-3 right-3 bg-[rgba(46, 46, 56, 0.5)] p-2 rounded-full"
-                onPress={() => toggleFavourite(property.id)}
+                onPress={() => onToggleFavourite(property.id)}
               >
-                <Icon name="star" size={20} color={favourites.includes(property.id) ? "#FFC336" : "#FFFFFF"} />
+                <Icon 
+                  name={isFavourite ? 'star' : 'star-outline'} 
+                  size={23} 
+                  color= {isFavourite ? '#FFC336' : '#fff'} 
+                />              
               </TouchableOpacity>
 
               {/* Dots Indicator */}
@@ -84,7 +98,7 @@ export default function PropertyDetailsScreen({ route }) {
             </View>
 
             {/* Header */}
-                <View className="absolute flex flex-row items-center mt-14 p-6 justify-between w-full">
+                <View className="absolute flex flex-row items-center mt-6 p-6 justify-between w-full">
 
                   {/* Back Button */}
                   <TouchableOpacity

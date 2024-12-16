@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from "../screens/HomeScreen";
+import MapScreen from "../screens/MapScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import BookmarkScreen from '../screens/BookmarkScreen';
 import ChatScreen from '../screens/ChatScreen';
 import NotificationsScreen from '../screens/NotificationScreen';
 import PropertyDetailsScreen from '../screens/PropertyDetailsScreen.js';
 
+import {properties} from '../../data/properties';
 import HomeIcon from '../../assets/images/tabicons/homeicon.png';
 import BookmarkIcon from '../../assets/images/tabicons/Bookmarkicon.png';
 import ChatIcon from '../../assets/images/tabicons/Chaticon.png';
@@ -19,7 +21,19 @@ import GridIcon from '../../assets/images/tabicons/Gridicon.png';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function BottomTab({ setIsAuthenticated, userInfo }) {
+function BottomTab({ setIsAuthenticated, userInfo}) {
+
+  const getTabBarIcon = (icon, focused) => (
+    <View style={styles.iconContainer}>
+      {focused && <View style={styles.focusedIndicator} />}
+      <Image
+        source={icon}
+        style={[styles.iconStyle, { tintColor: focused ? '#3e84d6' : '#04364A' }]}
+      />
+    </View>
+  );
+
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -30,37 +44,27 @@ function BottomTab({ setIsAuthenticated, userInfo }) {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        children={() => (
+          <HomeScreen
+            setIsAuthenticated={setIsAuthenticated}
+            userInfo={userInfo}
+            properties={properties}
+          />
+        )}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconContainer}>
-              {focused && <View style={styles.focusedIndicator} />}
-              <Image
-                source={HomeIcon}
-                style={[styles.iconStyle, { tintColor: focused ? '#3e84d6' : '#04364A' }]}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => getTabBarIcon(HomeIcon, focused),
         }}
       />
       <Tab.Screen
         name="Bookmarks"
-        component={BookmarkScreen}
+        children={() => <BookmarkScreen properties={properties} />}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconContainer}>
-              {focused && <View style={styles.focusedIndicator} />}
-              <Image
-                source={BookmarkIcon}
-                style={[styles.iconStyle, { tintColor: focused ? '#3e84d6' : '#04364A' }]}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => getTabBarIcon(BookmarkIcon, focused),
         }}
       />
       <Tab.Screen
         name="Grid"
-        component={HomeScreen} // Change to appropriate screen
+        children={() => <MapScreen properties={properties} />}
         options={{
           tabBarIcon: () => (
             <View style={styles.gridIconContainer}>
@@ -73,29 +77,13 @@ function BottomTab({ setIsAuthenticated, userInfo }) {
         name="Chat"
         component={ChatScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconContainer}>
-              {focused && <View style={styles.focusedIndicator} />}
-              <Image
-                source={ChatIcon}
-                style={[styles.iconStyle, { tintColor: focused ? '#3e84d6' : '#04364A' }]}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => getTabBarIcon(ChatIcon, focused),
         }}
       />
       <Tab.Screen
         name="Settings"
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconContainer}>
-              {focused && <View style={styles.focusedIndicator} />}
-              <Image
-                source={SettingsIcon}
-                style={[styles.iconStyle, { tintColor: focused ? '#3e84d6' : '#04364A' }]}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => getTabBarIcon(SettingsIcon, focused),
         }}
       >
         {() => (
@@ -114,7 +102,12 @@ export default function AppNavigator({ setIsAuthenticated, userInfo }) {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* Authenticated Tab Navigator */}
       <Stack.Screen name="Tabs">
-        {() => <BottomTab setIsAuthenticated={setIsAuthenticated} userInfo={userInfo} />}
+        {() => (
+          <BottomTab
+            setIsAuthenticated={setIsAuthenticated}
+            userInfo={userInfo}
+          />
+        )}
       </Stack.Screen>
 
       {/* Notifications Screen */}
@@ -188,21 +181,21 @@ const styles = StyleSheet.create({
   focusedIndicator: {
     position: 'absolute',
     backgroundColor: 'rgba(62, 132, 214, 0.2)',
-    width: 55,
-    height: 55,
+    width: 50,
+    height: 50,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 0,
   },
   iconStyle: {
-    width: 28,
-    height: 28,
+    width: 25,
+    height: 25,
     zIndex: 1,
   },
   gridIconContainer: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     backgroundColor: '#3e84d6',
     borderRadius: 30,
     justifyContent: 'center',
@@ -210,7 +203,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   gridIconStyle: {
-    width: 28,
-    height: 28,
+    width: 30,
+    height: 30,
   },
 });
