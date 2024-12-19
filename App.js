@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from './app/navigation/AuthStack';
 import AppNavigator from './app/navigation/AppNavigator';
 import { FavouritesProvider } from "./app/contexts/FavouritesContext";
+import { NotificationsProvider } from "./app/contexts/NotificationsContext";
 import './assets/styles/global.css';
 
 export default function App() {
@@ -36,18 +37,20 @@ export default function App() {
   }
 
   return (
-    <FavouritesProvider>
-      <NavigationContainer>
-        {isAuthenticated ? (
-          <AppNavigator 
-            setIsAuthenticated={setIsAuthenticated} 
-            userInfo={userInfo} 
-          />
-        ) : (
-          <AuthStack setIsAuthenticated={setIsAuthenticated} />
-        )}
-      </NavigationContainer>
-    </FavouritesProvider>
+    <NavigationContainer>
+      {isAuthenticated ? (
+        <NotificationsProvider>
+          <FavouritesProvider>
+            <AppNavigator
+              setIsAuthenticated={setIsAuthenticated}
+              userInfo={userInfo}
+            />
+          </FavouritesProvider>
+        </NotificationsProvider>
+      ) : (
+        <AuthStack setIsAuthenticated={setIsAuthenticated} />
+      )}
+    </NavigationContainer>
   );
 
 }
